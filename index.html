@@ -1,0 +1,369 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>DB Backup CLI — production-grade PostgreSQL backups from your terminal</title>
+  <meta name="description" content="DB Backup CLI: a Spring Shell tool that runs production-grade PostgreSQL backups via a Spring Batch pipeline. Gzipped dumps, named profiles, JSON logs, job history." />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+  <script type="module" src="/src/main.ts"></script>
+</head>
+<body class="font-sans antialiased">
+
+<a href="#main" class="skip-link">Skip to content</a>
+
+<!-- NAV -->
+<header class="sticky top-0 z-30 backdrop-blur bg-ink-950/70 border-b border-line">
+  <div class="max-w-6xl mx-auto px-5 h-14 flex items-center justify-between">
+    <a href="#" class="flex items-center gap-2 font-semibold tracking-tight">
+      <span class="inline-flex items-center justify-center w-7 h-7 rounded-md bg-accent-soft text-accent border border-line font-mono">&gt;_</span>
+      <span>DB Backup CLI</span>
+      <span class="ml-2 text-xs font-mono text-zinc-500">v0.1.1</span>
+    </a>
+    <nav class="hidden md:flex items-center gap-7 text-sm text-zinc-400">
+      <a href="#features" class="hover:text-white">Features</a>
+      <a href="#install" class="hover:text-white">Install</a>
+      <a href="#quickstart" class="hover:text-white">Quickstart</a>
+      <a href="https://github.com/jircik/DB-Backup-CLI" target="_blank" rel="noopener" class="hover:text-white">GitHub ↗</a>
+    </nav>
+    <a href="#install" class="text-sm font-medium px-3 py-1.5 rounded-md bg-accent text-ink-950 hover:brightness-110">Download</a>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- HERO -->
+<section class="grid-bg border-b border-line">
+  <div class="max-w-6xl mx-auto px-5 pt-20 pb-24">
+    <div class="flex flex-wrap items-center gap-2 text-xs font-mono mb-6">
+      <span class="chip rounded-full px-2.5 py-1 text-zinc-300">MIT</span>
+      <span class="chip rounded-full px-2.5 py-1 text-zinc-300">Java 21</span>
+      <span class="chip rounded-full px-2.5 py-1 text-zinc-300">Spring Boot 3.3</span>
+      <span class="chip rounded-full px-2.5 py-1 text-zinc-300">PostgreSQL 13+</span>
+    </div>
+
+    <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight leading-[1.05] max-w-3xl">
+      Production-grade PostgreSQL backups
+      <span class="text-accent">from your terminal.</span>
+    </h1>
+    <p class="mt-5 text-lg text-zinc-400 max-w-2xl">
+      A Spring Shell CLI that runs <span class="text-zinc-200">pg_dump</span> through a 5-step Spring Batch pipeline.
+      Gzipped dumps, named connection profiles, JSON-structured logs, and a built-in job history — all in one binary.
+    </p>
+
+    <div class="mt-8 flex flex-wrap items-center gap-3">
+      <a href="#install" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-md bg-accent text-ink-950 font-medium hover:brightness-110">
+        Download v0.1.1
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 4v12m0 0l-5-5m5 5l5-5M4 20h16"/></svg>
+      </a>
+      <a href="https://github.com/jircik/DB-Backup-CLI" target="_blank" rel="noopener"
+         class="inline-flex items-center gap-2 px-4 py-2.5 rounded-md border border-line bg-ink-800 hover:bg-ink-700 font-medium">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.8 10.9.6.1.8-.2.8-.6v-2c-3.2.7-3.9-1.4-3.9-1.4-.5-1.3-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1.1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.6-.3-5.3-1.3-5.3-5.8 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2 1-.3 2-.4 3-.4s2 .1 3 .4c2.3-1.5 3.3-1.2 3.3-1.2.7 1.6.2 2.8.1 3.1.8.8 1.2 1.9 1.2 3.1 0 4.5-2.7 5.5-5.3 5.8.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6 4.5-1.5 7.8-5.8 7.8-10.9C23.5 5.7 18.3.5 12 .5z"/></svg>
+        View on GitHub
+      </a>
+    </div>
+
+    <!-- Terminal mock -->
+    <div class="mt-14 max-w-3xl mx-auto term-shadow rounded-xl overflow-hidden border border-line bg-ink-900" role="img" aria-label="Terminal screenshot showing db-backup-cli connecting to a Postgres database and running a 5-step backup that produces a 7.1 MB gzipped dump.">
+      <div class="flex items-center gap-1.5 px-4 py-2.5 bg-ink-800 border-b border-line" aria-hidden="true">
+        <span class="w-3 h-3 rounded-full bg-red-500/80"></span>
+        <span class="w-3 h-3 rounded-full bg-yellow-400/80"></span>
+        <span class="w-3 h-3 rounded-full bg-green-500/80"></span>
+        <span class="ml-3 text-xs text-zinc-500 font-mono">~/projects — db-backup-cli</span>
+      </div>
+      <pre class="px-5 py-5 text-[13.5px] leading-relaxed font-mono overflow-x-auto"><span class="text-zinc-500">$</span> <span class="text-zinc-200">db-backup-cli</span>
+
+<span class="text-cyan2">db-backup-cli&gt;</span> <span class="text-zinc-200">test-connection --profile prod</span>
+<span class="text-accent">✓</span> <span class="text-zinc-400">connected to postgres://prod-db:5432 (PostgreSQL 16.2)</span>
+
+<span class="text-cyan2">db-backup-cli&gt;</span> <span class="text-zinc-200">backup --profile prod --output ./backups</span>
+<span class="text-zinc-500">[1/5]</span> validate-profile     <span class="text-accent">ok</span>
+<span class="text-zinc-500">[2/5]</span> check-pg-version     <span class="text-accent">ok</span>
+<span class="text-zinc-500">[3/5]</span> run-pg-dump          <span class="text-accent">42.3 MB</span>
+<span class="text-zinc-500">[4/5]</span> gzip-compress        <span class="text-accent">7.1 MB</span>
+<span class="text-zinc-500">[5/5]</span> persist-job-history  <span class="text-accent">ok</span>
+<span class="text-accent">✓</span> <span class="text-zinc-300">backup complete</span> <span class="text-zinc-500">→ ./backups/prod-2026-05-11T1430.sql.gz</span><span class="blink"></span></pre>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features" class="border-b border-line">
+  <div class="max-w-6xl mx-auto px-5 py-20">
+    <div class="max-w-2xl">
+      <p class="text-xs font-mono uppercase tracking-widest text-accent mb-3">// features</p>
+      <h2 class="text-3xl sm:text-4xl font-bold tracking-tight">Built like a service. Runs like a script.</h2>
+      <p class="mt-4 text-zinc-400">Every backup goes through the same observable pipeline. No surprises, no ad-hoc shell wrappers.</p>
+    </div>
+
+    <div class="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <!-- card -->
+      <div class="rounded-xl border border-line bg-ink-900 p-6 hover:border-zinc-600 transition">
+        <div class="w-9 h-9 rounded-md bg-accent-soft text-accent border border-line flex items-center justify-center mb-4">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h10"/></svg>
+        </div>
+        <h3 class="font-semibold">Spring Batch pipeline</h3>
+        <p class="mt-2 text-sm text-zinc-400">A deterministic 5-step flow: validate → version-check → dump → compress → persist. Restartable, observable, scriptable.</p>
+      </div>
+      <div class="rounded-xl border border-line bg-ink-900 p-6 hover:border-zinc-600 transition">
+        <div class="w-9 h-9 rounded-md bg-accent-soft text-accent border border-line flex items-center justify-center mb-4">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+        </div>
+        <h3 class="font-semibold">Gzip out of the box</h3>
+        <p class="mt-2 text-sm text-zinc-400">Every dump is streamed through gzip so backups land 5–10× smaller without an extra command in your cron.</p>
+      </div>
+      <div class="rounded-xl border border-line bg-ink-900 p-6 hover:border-zinc-600 transition">
+        <div class="w-9 h-9 rounded-md bg-accent-soft text-accent border border-line flex items-center justify-center mb-4">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h10"/></svg>
+        </div>
+        <h3 class="font-semibold">Named connection profiles</h3>
+        <p class="mt-2 text-sm text-zinc-400">Define <span class="font-mono text-zinc-300">dev</span>, <span class="font-mono text-zinc-300">staging</span>, <span class="font-mono text-zinc-300">prod</span> in <span class="font-mono text-zinc-300">application.yml</span>. No flag soup at the prompt.</p>
+      </div>
+      <div class="rounded-xl border border-line bg-ink-900 p-6 hover:border-zinc-600 transition">
+        <div class="w-9 h-9 rounded-md bg-accent-soft text-accent border border-line flex items-center justify-center mb-4">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v6H4zM4 14h16v6H4z"/></svg>
+        </div>
+        <h3 class="font-semibold">JSON structured logs</h3>
+        <p class="mt-2 text-sm text-zinc-400">Ship straight to ELK, Datadog or Loki. Each step emits a structured record — easy to alert on, easy to grep.</p>
+      </div>
+      <div class="rounded-xl border border-line bg-ink-900 p-6 hover:border-zinc-600 transition">
+        <div class="w-9 h-9 rounded-md bg-accent-soft text-accent border border-line flex items-center justify-center mb-4">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v6c0 1.7 3.6 3 8 3s8-1.3 8-3V6M4 12v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/></svg>
+        </div>
+        <h3 class="font-semibold">Embedded job history</h3>
+        <p class="mt-2 text-sm text-zinc-400">An embedded H2 store records every run with status, duration, size, and exit code. Query past jobs from the shell.</p>
+      </div>
+      <div class="rounded-xl border border-line bg-ink-900 p-6 hover:border-zinc-600 transition">
+        <div class="w-9 h-9 rounded-md bg-accent-soft text-accent border border-line flex items-center justify-center mb-4">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h4l3 8 4-16 3 8h4"/></svg>
+        </div>
+        <h3 class="font-semibold">PostgreSQL 13+</h3>
+        <p class="mt-2 text-sm text-zinc-400">Built on <span class="font-mono text-zinc-300">pg_dump 17+</span>. MySQL / MariaDB land in a future phase — open an issue with your use case.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INSTALL -->
+<section id="install" class="border-b border-line">
+  <div class="max-w-6xl mx-auto px-5 py-20">
+    <div class="max-w-2xl">
+      <p class="text-xs font-mono uppercase tracking-widest text-accent mb-3">// install</p>
+      <h2 class="text-3xl sm:text-4xl font-bold tracking-tight">Pick your install path.</h2>
+      <p class="mt-4 text-zinc-400">Four ways to get DB Backup CLI running. The native binary is fastest to start; the <span class="font-mono text-zinc-300">.jar</span> is the smallest universal option.</p>
+    </div>
+
+    <!-- METHOD TABS -->
+    <div class="mt-10 flex flex-wrap gap-2" role="tablist" aria-label="Install methods">
+      <button role="tab" aria-selected="true" aria-controls="panel-binary" id="tab-binary" data-method-tab="binary" class="method-tab tab-active inline-flex items-center gap-2 px-4 py-2 rounded-md border border-line bg-ink-800 text-zinc-400 text-sm hover:text-white">
+        <span class="tab-dot w-1.5 h-1.5 rounded-full bg-zinc-600"></span> Native binary
+        <span class="ml-1 text-[10px] font-mono px-1.5 py-0.5 rounded bg-accent-soft text-accent border border-line">recommended</span>
+      </button>
+      <button role="tab" aria-selected="false" aria-controls="panel-jar" id="tab-jar" data-method-tab="jar" class="method-tab inline-flex items-center gap-2 px-4 py-2 rounded-md border border-line bg-ink-800 text-zinc-400 text-sm hover:text-white">
+        <span class="tab-dot w-1.5 h-1.5 rounded-full bg-zinc-600"></span> GitHub Releases (.jar)
+      </button>
+      <button role="tab" aria-selected="false" aria-controls="panel-actions" id="tab-actions" data-method-tab="actions" class="method-tab inline-flex items-center gap-2 px-4 py-2 rounded-md border border-line bg-ink-800 text-zinc-400 text-sm hover:text-white">
+        <span class="tab-dot w-1.5 h-1.5 rounded-full bg-zinc-600"></span> GitHub Actions artifact
+      </button>
+      <button role="tab" aria-selected="false" aria-controls="panel-source" id="tab-source" data-method-tab="source" class="method-tab inline-flex items-center gap-2 px-4 py-2 rounded-md border border-line bg-ink-800 text-zinc-400 text-sm hover:text-white">
+        <span class="tab-dot w-1.5 h-1.5 rounded-full bg-zinc-600"></span> Build from source
+      </button>
+    </div>
+
+    <!-- PANEL: BINARY -->
+    <div id="panel-binary" role="tabpanel" aria-labelledby="tab-binary" data-method-panel="binary" class="mt-6">
+      <p class="text-sm text-zinc-400 mb-4">Pre-built native binary via GraalVM. Pick your OS:</p>
+
+      <!-- OS selector -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-xl" role="tablist" aria-label="Operating system">
+        <button role="tab" aria-selected="true" aria-controls="os-panel-linux" data-os-tab="linux" class="os-tab tab-active group rounded-xl border border-line bg-ink-900 p-5 text-left hover:border-zinc-600 transition">
+          <div class="flex items-center justify-between">
+            <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" class="text-zinc-200"><path d="M12 2c-1.66 0-3 1.34-3 3v3.55C7.69 9.4 6.5 11.18 6.5 13.5c0 1.5.4 2.85 1.2 4l-1.05 2.1c-.36.71.15 1.55.95 1.55h8.8c.8 0 1.31-.84.95-1.55l-1.05-2.1c.8-1.15 1.2-2.5 1.2-4 0-2.32-1.19-4.1-2.5-4.95V5c0-1.66-1.34-3-3-3zm-1.6 4.2c.33 0 .6.27.6.6s-.27.6-.6.6-.6-.27-.6-.6.27-.6.6-.6zm3.2 0c.33 0 .6.27.6.6s-.27.6-.6.6-.6-.27-.6-.6.27-.6.6-.6zM12 9.5c1.1 0 2 .67 2 1.5s-.9 1.5-2 1.5-2-.67-2-1.5.9-1.5 2-1.5z"/></svg>
+            <span class="text-[10px] font-mono text-zinc-500">~116 MB</span>
+          </div>
+          <div class="mt-3 font-semibold">Linux</div>
+          <div class="text-xs text-zinc-500 font-mono">x86_64</div>
+        </button>
+        <button role="tab" aria-selected="false" aria-controls="os-panel-windows" data-os-tab="windows" class="os-tab group rounded-xl border border-line bg-ink-900 p-5 text-left hover:border-zinc-600 transition">
+          <div class="flex items-center justify-between">
+            <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" class="text-zinc-200"><path d="M3 5.5l8-1.1V11.5H3V5.5zM3 12.5h8v7.1l-8-1.1v-6zM12 4.25L21 3v8.5h-9V4.25zM12 12.5h9V21l-9-1.25V12.5z"/></svg>
+            <span class="text-[10px] font-mono text-zinc-500">~110 MB</span>
+          </div>
+          <div class="mt-3 font-semibold">Windows</div>
+          <div class="text-xs text-zinc-500 font-mono">x86_64</div>
+        </button>
+      </div>
+
+      <!-- Linux commands -->
+      <div id="os-panel-linux" role="tabpanel" data-os-panel="linux" class="mt-6 rounded-xl border border-line bg-ink-900 overflow-hidden">
+        <div class="flex items-center justify-between px-4 py-2 border-b border-line bg-ink-800">
+          <span class="text-xs font-mono text-zinc-400">Linux · x86_64 · glibc 2.31+</span>
+          <button data-copy="cmd-linux" class="copy-btn text-xs font-mono text-zinc-400 hover:text-white">Copy</button>
+        </div>
+<pre id="cmd-linux" class="px-5 py-4 text-[13px] font-mono leading-relaxed overflow-x-auto">curl -LO https://github.com/jircik/DB-Backup-CLI/releases/download/v0.1.1/db-backup-cli
+chmod +x db-backup-cli
+./db-backup-cli</pre>
+      </div>
+
+      <!-- Windows commands -->
+      <div id="os-panel-windows" role="tabpanel" data-os-panel="windows" class="hidden mt-6 rounded-xl border border-line bg-ink-900 overflow-hidden">
+        <div class="flex items-center justify-between px-4 py-2 border-b border-line bg-ink-800">
+          <span class="text-xs font-mono text-zinc-400">Windows · PowerShell</span>
+          <button data-copy="cmd-windows" class="copy-btn text-xs font-mono text-zinc-400 hover:text-white">Copy</button>
+        </div>
+<pre id="cmd-windows" class="px-5 py-4 text-[13px] font-mono leading-relaxed overflow-x-auto">Invoke-WebRequest `
+  -Uri https://github.com/jircik/DB-Backup-CLI/releases/download/v0.1.1/db-backup-cli.exe `
+  -OutFile db-backup-cli.exe
+.\db-backup-cli.exe</pre>
+      </div>
+
+      <p class="mt-4 text-xs text-zinc-500">
+        No JVM required. Cold-start under ~50 ms thanks to GraalVM native-image.
+        On macOS? <button type="button" data-method-tab-link="jar" class="text-accent hover:underline">Use the .jar</button> — a native macOS binary isn't published yet.
+        <a href="https://github.com/jircik/DB-Backup-CLI/releases/tag/v0.1.1" target="_blank" rel="noopener" class="text-accent hover:underline ml-1">All v0.1.1 assets ↗</a>
+      </p>
+    </div>
+
+    <!-- PANEL: JAR -->
+    <div id="panel-jar" role="tabpanel" aria-labelledby="tab-jar" data-method-panel="jar" class="hidden mt-6">
+      <p class="text-sm text-zinc-400 mb-4">Universal fat-jar. Runs on any platform with Java 21+ — including macOS.</p>
+      <div class="rounded-xl border border-line bg-ink-900 overflow-hidden">
+        <div class="flex items-center justify-between px-4 py-2 border-b border-line bg-ink-800">
+          <span class="text-xs font-mono text-zinc-400">requires: Java 21+</span>
+          <button data-copy="cmd-jar" class="copy-btn text-xs font-mono text-zinc-400 hover:text-white">Copy</button>
+        </div>
+<pre id="cmd-jar" class="px-5 py-4 text-[13px] font-mono leading-relaxed overflow-x-auto">curl -LO https://github.com/jircik/DB-Backup-CLI/releases/download/v0.1.1/db-backup-cli-0.1.0-SNAPSHOT.jar
+
+java -jar db-backup-cli-0.1.0-SNAPSHOT.jar</pre>
+      </div>
+      <p class="mt-4 text-xs text-zinc-500">
+        Same feature set as the native binary, but starts in ~1–2 s (JVM warmup).
+        <a href="https://github.com/jircik/DB-Backup-CLI/releases/tag/v0.1.1" target="_blank" rel="noopener" class="text-accent hover:underline">Release notes ↗</a>
+      </p>
+    </div>
+
+    <!-- PANEL: ACTIONS -->
+    <div id="panel-actions" role="tabpanel" aria-labelledby="tab-actions" data-method-panel="actions" class="hidden mt-6">
+      <p class="text-sm text-zinc-400 mb-4">Grab a bleeding-edge build straight off <span class="font-mono text-zinc-300">main</span> — no release required.</p>
+      <ol class="space-y-3 text-sm text-zinc-300 max-w-2xl">
+        <li class="flex gap-3"><span class="shrink-0 w-6 h-6 rounded-md bg-accent-soft text-accent border border-line font-mono text-xs flex items-center justify-center">1</span>
+          Open the <a class="text-accent hover:underline" href="https://github.com/jircik/DB-Backup-CLI/actions" target="_blank" rel="noopener">Actions tab</a> on GitHub.</li>
+        <li class="flex gap-3"><span class="shrink-0 w-6 h-6 rounded-md bg-accent-soft text-accent border border-line font-mono text-xs flex items-center justify-center">2</span>
+          Pick the latest green <span class="font-mono text-zinc-200">CI / build</span> run on <span class="font-mono text-zinc-200">main</span>.</li>
+        <li class="flex gap-3"><span class="shrink-0 w-6 h-6 rounded-md bg-accent-soft text-accent border border-line font-mono text-xs flex items-center justify-center">3</span>
+          Scroll to <span class="font-mono text-zinc-200">Artifacts</span> and download <span class="font-mono text-zinc-200">db-backup-cli-jar</span>.</li>
+        <li class="flex gap-3"><span class="shrink-0 w-6 h-6 rounded-md bg-accent-soft text-accent border border-line font-mono text-xs flex items-center justify-center">4</span>
+          Unzip and run <span class="font-mono text-zinc-200">java -jar db-backup-cli-*.jar</span>.</li>
+      </ol>
+      <p class="mt-5 text-xs text-zinc-500">Artifacts expire after 90 days. You'll need a GitHub account to download them.</p>
+    </div>
+
+    <!-- PANEL: SOURCE -->
+    <div id="panel-source" role="tabpanel" aria-labelledby="tab-source" data-method-panel="source" class="hidden mt-6">
+      <p class="text-sm text-zinc-400 mb-4">Compile locally. Useful for contributing or pinning to a commit.</p>
+      <div class="rounded-xl border border-line bg-ink-900 overflow-hidden">
+        <div class="flex items-center justify-between px-4 py-2 border-b border-line bg-ink-800">
+          <span class="text-xs font-mono text-zinc-400">requires: Java 21+, pg_dump 17+</span>
+          <button data-copy="cmd-source" class="copy-btn text-xs font-mono text-zinc-400 hover:text-white">Copy</button>
+        </div>
+<pre id="cmd-source" class="px-5 py-4 text-[13px] font-mono leading-relaxed overflow-x-auto">git clone https://github.com/jircik/DB-Backup-CLI.git
+cd DB-Backup-CLI
+./mvnw package -DskipTests
+java -jar target/db-backup-cli-0.1.0-SNAPSHOT.jar</pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUICKSTART -->
+<section id="quickstart" class="border-b border-line">
+  <div class="max-w-6xl mx-auto px-5 py-20">
+    <div class="max-w-2xl">
+      <p class="text-xs font-mono uppercase tracking-widest text-accent mb-3">// quickstart</p>
+      <h2 class="text-3xl sm:text-4xl font-bold tracking-tight">Your first backup in 60 seconds.</h2>
+      <p class="mt-4 text-zinc-400">Once installed, define a profile and run two commands.</p>
+    </div>
+
+    <div class="mt-10 grid grid-cols-1 lg:grid-cols-3 gap-4">
+      <!-- step 1 -->
+      <div class="rounded-xl border border-line bg-ink-900 overflow-hidden">
+        <div class="flex items-center gap-3 px-4 py-3 border-b border-line">
+          <span class="w-7 h-7 rounded-md bg-accent-soft text-accent border border-line font-mono text-sm flex items-center justify-center">1</span>
+          <span class="text-sm font-medium">Add a profile to <span class="font-mono">application.yml</span></span>
+        </div>
+<pre class="px-5 py-4 text-[12.5px] font-mono leading-relaxed overflow-x-auto"><span class="text-cyan2">db-backup:</span>
+  <span class="text-cyan2">profiles:</span>
+    <span class="text-cyan2">dev:</span>
+      <span class="text-zinc-400">host:</span>     localhost
+      <span class="text-zinc-400">port:</span>     5432
+      <span class="text-zinc-400">database:</span> app
+      <span class="text-zinc-400">user:</span>     postgres
+      <span class="text-zinc-400">password:</span> <span class="text-zinc-500">${PG_PASS}</span></pre>
+      </div>
+      <!-- step 2 -->
+      <div class="rounded-xl border border-line bg-ink-900 overflow-hidden">
+        <div class="flex items-center gap-3 px-4 py-3 border-b border-line">
+          <span class="w-7 h-7 rounded-md bg-accent-soft text-accent border border-line font-mono text-sm flex items-center justify-center">2</span>
+          <span class="text-sm font-medium">Verify connectivity</span>
+        </div>
+<pre class="px-5 py-4 text-[12.5px] font-mono leading-relaxed overflow-x-auto"><span class="text-cyan2">db-backup-cli&gt;</span> test-connection \
+  --profile dev
+
+<span class="text-accent">✓</span> <span class="text-zinc-400">connected to</span>
+  <span class="text-zinc-300">postgres://localhost:5432</span>
+  <span class="text-zinc-500">(PostgreSQL 16.2)</span></pre>
+      </div>
+      <!-- step 3 -->
+      <div class="rounded-xl border border-line bg-ink-900 overflow-hidden">
+        <div class="flex items-center gap-3 px-4 py-3 border-b border-line">
+          <span class="w-7 h-7 rounded-md bg-accent-soft text-accent border border-line font-mono text-sm flex items-center justify-center">3</span>
+          <span class="text-sm font-medium">Run a backup</span>
+        </div>
+<pre class="px-5 py-4 text-[12.5px] font-mono leading-relaxed overflow-x-auto"><span class="text-cyan2">db-backup-cli&gt;</span> backup \
+  --profile dev \
+  --output ./backups
+
+<span class="text-accent">✓</span> <span class="text-zinc-400">→ ./backups/</span>
+  <span class="text-zinc-300">dev-2026-05-11T1430.sql.gz</span></pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="border-b border-line">
+  <div class="max-w-6xl mx-auto px-5 py-20 text-center">
+    <h2 class="text-3xl sm:text-4xl font-bold tracking-tight">Ready to ditch the cron-and-shell-script combo?</h2>
+    <p class="mt-4 text-zinc-400">DB Backup CLI is open-source, MIT-licensed, and v0.1.1 is out today.</p>
+    <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
+      <a href="#install" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-md bg-accent text-ink-950 font-medium hover:brightness-110">Download v0.1.1</a>
+      <a href="https://github.com/jircik/DB-Backup-CLI" target="_blank" rel="noopener"
+         class="inline-flex items-center gap-2 px-5 py-2.5 rounded-md border border-line bg-ink-800 hover:bg-ink-700 font-medium">Star on GitHub</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="py-10">
+  <div class="max-w-6xl mx-auto px-5 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-zinc-500">
+    <div class="flex items-center gap-2">
+      <span class="inline-flex items-center justify-center w-6 h-6 rounded-md bg-accent-soft text-accent border border-line font-mono text-xs">$_</span>
+      <span>DB Backup CLI · MIT License</span>
+    </div>
+    <div class="flex items-center gap-5">
+      <a href="https://github.com/jircik/DB-Backup-CLI" target="_blank" rel="noopener" class="hover:text-white">GitHub</a>
+      <a href="https://github.com/jircik/DB-Backup-CLI/issues" target="_blank" rel="noopener" class="hover:text-white">Issues</a>
+      <a href="https://github.com/jircik/DB-Backup-CLI/releases" target="_blank" rel="noopener" class="hover:text-white">Releases</a>
+    </div>
+  </div>
+</footer>
+
+<div id="sr-live" class="sr-only" aria-live="polite" style="position:absolute;left:-9999px"></div>
+
+</body>
+</html>

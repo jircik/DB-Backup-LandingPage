@@ -1,0 +1,74 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular;
+
+  --color-ink-950: #07090b;
+  --color-ink-900: #0b0d10;
+  --color-ink-800: #11151a;
+  --color-ink-700: #1a2027;
+  --color-ink-600: #252d36;
+
+  --color-line: #1f262d;
+
+  --color-accent: #34d399;
+  --color-accent-soft: #34d39922;
+
+  --color-cyan2: #22d3ee;
+}
+
+html { scroll-behavior: smooth; }
+body { background-color: #07090b; color: #e6edf3; }
+
+.grid-bg {
+  background-image:
+    radial-gradient(ellipse 60% 50% at 50% -10%, rgba(52,211,153,.10), transparent 60%),
+    linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
+  background-size: auto, 32px 32px, 32px 32px;
+}
+
+.term-shadow { box-shadow: 0 30px 80px -20px rgba(0,0,0,.6), 0 0 0 1px #1f262d inset; }
+.chip { border: 1px solid #1f262d; background: #11151a; }
+
+[data-os-panel].hidden, [data-method-panel].hidden { display: none; }
+
+.tab-active { background: #11151a; border-color: #2a3441; color: #e6edf3; }
+.tab-active .tab-dot { background: #34d399; }
+
+.blink::after {
+  content: '▍';
+  color: #34d399;
+  animation: blink 1s steps(1) infinite;
+  margin-left: 2px;
+}
+@keyframes blink { 50% { opacity: 0; } }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .blink::after { animation: none; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+:focus-visible {
+  outline: 2px solid #34d399;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 8px;
+  background: #34d399;
+  color: #07090b;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-weight: 600;
+  z-index: 100;
+}
+.skip-link:focus { top: 8px; }
