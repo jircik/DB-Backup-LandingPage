@@ -8,7 +8,7 @@ The marketing site for the [**DB Backup CLI**](https://github.com/jircik/DB-Back
 
 Static single-page site. Dark, terminal-inspired design. No framework, no SSR, no JavaScript bundle beyond a few KB.
 
-> Live at [**dbcli.jircik.dev**](http://dbcli.jircik.dev).
+> Live at [**db-backup.jircik.dev**](http://db-backup.jircik.dev).
 
 ---
 
